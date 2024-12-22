@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Material Dashboard 3 by Creative Tim
+    Crypque Event
   </title>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!--     Fonts and icons     -->
@@ -29,7 +29,7 @@
       let path = window.location.pathname;
       // Extract the last part of the path (the page name)
       let pageName = path.substring(path.lastIndexOf("/") + 1);
-      
+
       // Capitalize the first letter (optional, to make it look nicer)
       pageName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
 
@@ -49,7 +49,7 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
         aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand px-4 py-3 m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard "
+      <a class="navbar-brand px-4 py-3 m-0" href="{{ route('admin.dashboard') }}"
         target="_blank">
         <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
         <span class="ms-1 text-sm text-dark">Crypque Event</span>
@@ -83,7 +83,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="{{route('allstudents')}}">
+          <a class="nav-link text-dark" href="{{route('admin.publishRequestView')}}">
             <i class="material-symbols-rounded opacity-5">person</i>
             <span class="nav-link-text ms-1">Event Publish Request</span>
           </a>
@@ -102,19 +102,18 @@
         </li>
         <li class="nav-item">
           <form method="POST" action="{{ route('logout') }}" id="logout-form" style="display: none;">
-              @csrf
+            @csrf
           </form>
-          
-          <a class="nav-link text-dark" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-              <i class="material-symbols-rounded opacity-5">Logout</i>
-              <span class="nav-link-text ms-1">LogOut</span>
+
+          <a class="nav-link text-dark" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="material-symbols-rounded opacity-5">Logout</i>
+            <span class="nav-link-text ms-1">LogOut</span>
           </a>
-      </li>
-      
-       
-       
+        </li>
+
+
+
       </ul>
     </div>
-    
+
   </aside>
-  

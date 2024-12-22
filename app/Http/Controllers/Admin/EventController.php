@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\{
     EventType,
     UserEvent,
-    EventTraning
+    EventTraning,
+    PaymentHistory,
+    User
 };
 use Illuminate\Support\Facades\{
     Auth,
@@ -127,8 +129,6 @@ class EventController extends Controller
             'image' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // dd($request->all());
-
         // Handle image upload
         if ($request->hasFile('image')) {
             // Ensure directory exists
@@ -151,7 +151,7 @@ class EventController extends Controller
                 'speaker_name' => $request->speaker_name,
                 'location' => $request->location,
                 'type' => 2,
-                'status' => 2,
+                'status' => 1,
                 'event_type' => $request->event_type,
                 'description' => $request->description,
                 'image_path' => $shortenedName,  // Store the image name in the database
@@ -159,5 +159,43 @@ class EventController extends Controller
             return redirect()->route('admin.eventcreate')->with('success', 'Event created successfully.');
         }
         return redirect()->route('admin.eventcreate')->with('error', 'Event created successfully.');
+    }
+
+    // Payment controller view
+    public function publishRequestView()
+    {
+
+        $list = UserEvent::all();
+        foreach ($list as $event) {
+            $userName = User::find($event->user_id)->name ?? 'Unknown User';
+        }
+        return view('AdminPenal.PublishRequestView', compact('list', 'userName'));
+    }
+
+    public function publishEventDelete($id)
+    {
+        $eventType = UserEvent::findOrFail($id);
+        $eventType->delete();
+        return redirect()->back()->with('success', 'Event Type deleted successfully.');
+    }
+
+    public function publishedEventReview($id)
+    {
+        $list = UserEvent::find($id);
+        return view('AdminPenal.PublishedEventReview', compact('list'));
+    }
+
+    public function publishEventStatusUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|string|in:2,3',
+        ]);
+        $userEvent = UserEvent::findOrFail($id);
+
+        $userEvent->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect()->back()->with('success', 'Event status updated successfully.');
     }
 }

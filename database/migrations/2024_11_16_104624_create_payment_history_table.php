@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('transaction_id')->unique();
             $table->integer('status')->default(1)->comment("1=>pending,2=>approved,3=>rejected ");
             $table->integer('type')->comment("1=>Pay now,2=>Pay With Crypto ");
+            $table->integer('event_status')->default(1)->comment("1=>Panding,2=>Complete ");
             $table->timestamp('payment_date')->nullable(); // Payment date
             $table->timestamps();
         });

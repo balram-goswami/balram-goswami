@@ -1,51 +1,54 @@
-@include('layout.header') 
-  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+@include('layout.header')
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
-    @include('layout.head') 
+    @include('layout.head')
     <!-- End Navbar -->
 
     <div class="container-fluid py-2">
         <div class="container">
             <div class="row">
-                @foreach($Event as $event)
+                @foreach($Event as $data)
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100" >
-                        <img src="{{ asset('storage/event_images/' . $event->image_path) }}" 
-                             class="card-img-top" 
-                             alt="Event Image"
-                             style="padding: 12px; border-radius: 18px;">
+                    <div class="card h-100">
+                    <img src="{{ asset('storage/event_images/' . $data->image_path)}}"
+                            class="card-img-top"
+                            alt="Event Image"
+                            style="padding: 12px; border-radius: 18px;">
                         <div class="card-body text-center">
                             <h5 class="card-title">
-                                {{ $event->event_name }} <span class="text-highlight">{{ $event->guest_names }}</span>
-                                PROGRAM {{ $event->event_date }}<br>
-                                Speaker {{ $event->speaker_name }}<br>
-                                Event Type {{ $event->event_type }}
+                                {{ $data->event_name }} <br>
+                                Guest :-{{ $data->guest_names }}<br>
+                                PROGRAM :- {{ $data->event_date }}<br>
+                                Speaker :- {{ $data->speaker_name }}<br>
+                                @foreach($eventType as $type)
+                                Event Type :- {{ $type->name }}
+                                @endforeach
                             </h5>
-                            <p class="card-text">{{ $event->description }}</p>
+                            <p class="card-text">{{ $data->description }}</p>
                         </div>
-            
+
                         {{-- Check if the event has a corresponding PaymentHistory with status == 2 --}}
                         @php
-                            $paymentHistoryForEvent = $PaymentHistory->where('event_id', $event->id)->first();
+                        $paymentHistoryForEvent = $PaymentHistory->where('event_id', $data->id)->first();
                         @endphp
-            
+
                         @if($paymentHistoryForEvent && $paymentHistoryForEvent->status == 2)
-                            <div class="card-footer text-center">
-                                <a href="{{ route('eventtraning', ['id' => $event->id]) }}">
-                                    <button class="btn btn-primary" data-event-id="{{ $event->id }}">Start Learning</button>
-                                </a>
-                                
-                            </div>
+                        <div class="card-footer text-center">
+                            <a href="{{ route('eventtraning', $data->id) }}">
+                                <button class="btn btn-primary" data-event-id="{{ $data->id }}">Start Learning</button>
+                            </a>
+
+                        </div>
                         @else
-                            <div class="card-footer text-center">
-                                <button class="btn btn-primary pay-now-btn" data-event-id="{{ $event->id }}">Pay Now</button>
-                                <button class="btn btn-secondary pay-crypto-btn" data-event-id="{{ $event->id }}">Pay With Crypto</button>
-                            </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary pay-now-btn" data-event-id="{{ $data->id }}">Pay Now</button>
+                            <button class="btn btn-secondary pay-crypto-btn" data-event-id="{{ $data->id }}">Pay With Crypto</button>
+                        </div>
                         @endif
                     </div>
                 </div>
-            @endforeach
-            
+                @endforeach
+
 
                 <!-- Pay Now Modal -->
                 <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -61,7 +64,7 @@
                                 <form action="{{ route('PaymentHistory.store') }}" method="POST">
                                     @csrf
                                     <input type="hidden" id="eventId" name="event_id">
-                                    <input type="hidden" id="payment_method" name="payment_method"> <!-- Hidden field for payment method -->
+                                    <input type="hidden" id="payment_method" name="payment_method">
                                     <div class="form-group">
                                         <label for="amount">Amount</label>
                                         <div class="input-group input-group-outline">
@@ -79,9 +82,9 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
-                                
+
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -102,7 +105,7 @@
                                     <!-- Hidden Fields -->
                                     <input type="hidden" id="cryptoEventId" name="event_id">
                                     <input type="hidden" id="payment_method" name="payment_method" value="2">
-            
+
                                     <div class="form-group">
                                         <label for="amount">Amount</label>
                                         <div class="input-group input-group-outline">
@@ -115,7 +118,7 @@
                                             <input type="text" class="form-control" id="transactionId" name="transaction_id" required>
                                         </div>
                                     </div>
-            
+
                                     <!-- Submit Button -->
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-secondary">Pay With Crypto</button>
@@ -126,7 +129,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -135,24 +138,22 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Handle Pay Now button clicks
             document.querySelectorAll('.pay-now-btn').forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', function() {
                     const eventId = this.getAttribute('data-event-id');
                     document.getElementById('eventId').value = eventId; // Set event ID in hidden input
                     document.getElementById('payment_method').value = 1; // Set payment method to '1' for Pay Now
                     $('#paymentModal').modal('show'); // Show the modal
                 });
             });
-    
+
             document.querySelectorAll('.pay-crypto-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const eventId = this.getAttribute('data-event-id');
-                document.getElementById('cryptoEventId').value = eventId; // Set event ID in hidden input
-                document.getElementById('payment_method').value = 2; // Ensure method value is set
-                $('#cryptoPaymentModal').modal('show'); // Show the modal
+                button.addEventListener('click', function() {
+                    const eventId = this.getAttribute('data-event-id');
+                    document.getElementById('cryptoEventId').value = eventId; // Set event ID in hidden input
+                    document.getElementById('payment_method').value = 2; // Ensure method value is set
+                    $('#cryptoPaymentModal').modal('show'); // Show the modal
+                });
             });
-        });
 
         });
     </script>
-    
-    

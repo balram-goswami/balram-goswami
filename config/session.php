@@ -31,6 +31,7 @@ return [
     | indicate that via the expire_on_close configuration option.
     |
     */
+    
 
     'lifetime' => env('SESSION_LIFETIME', 120),
 

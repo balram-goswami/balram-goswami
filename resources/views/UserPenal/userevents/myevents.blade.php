@@ -7,56 +7,49 @@
     <div class="container-fluid py-2">
         <div class="container">
             <div class="row">
-                @foreach($Event as $event)
+                @foreach($Event as $data)
                 <div class="col-lg-4 col-md-6 mb-4">
-
                     <div class="card h-100">
-                        <i class="fa fa-share"></i>
-                        <img src="{{ asset('storage/event_images/' . $event->image_path) }}"
+                        <img src="{{ asset('storage/event_images/' . $data->image_path) }}"
                             class="card-img-top"
                             alt="Event Image"
                             style="padding: 12px; border-radius: 18px;">
                         <div class="card-body text-center">
                             <h5 class="card-title">
-                                {{ $event->event_name }} <span class="text-highlight">{{ $event->guest_names }}</span>
-                                PROGRAM {{ $event->event_date }}<br>
-                                Speaker {{ $event->speaker_name }}<br>
-                                Event Type {{ $event->event_type }}
+                                {{ $data->event_name }} <br>
+                                Guest :-{{ $data->guest_names }}<br>
+                                PROGRAM :- {{ $data->event_date }}<br>
+                                Speaker :- {{ $data->speaker_name }}<br>
+                                @foreach($eventType as $type)
+                                Event Type :- {{ $type->name }}
+                                @endforeach
                             </h5>
-                            <p class="card-text">{{ $event->description }}</p>
+                            <p class="card-text">{{ $data->description }}</p>
                         </div>
-                        <div class="card-footer text-center d-flex justify-content-between">
-                            <!-- Edit Button -->
-                            <a href="{{ route('event.edit', $event->id) }}" class="btn btn-primary">
-                                <i class="fa fa-edit"></i> Edit
+
+                        {{-- Check if the event has a corresponding PaymentHistory with status == 2 --}}
+                        @php
+                        $paymentHistoryForEvent = $PaymentHistory->where('event_id', $data->id)->first();
+                        @endphp
+
+                        @if($paymentHistoryForEvent && $paymentHistoryForEvent->status == 2)
+                        <div class="card-footer text-center">
+                            <a href="{{ route('eventtraning', $data->id) }}">
+                                <button class="btn btn-primary" data-event-id="{{ $data->id }}">Start Learning</button>
                             </a>
-
-                            <!-- Delete Button -->
-                            <form action="{{ route('event.delete', $event->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger">
-                                    <i class="fa fa-trash"></i> Delete
-                                </button>
-                            </form>
-
-
                         </div>
+                        @endif
+
                     </div>
                 </div>
                 @endforeach
 
                 <style>
                     .create-event-card {
-
-
-
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         margin: 150px auto;
-
-
                     }
 
                     .plus-icon {
@@ -76,7 +69,7 @@
                 </style>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-
+                        @if(!$createEvent)
                         <div class="create-event-card text-center">
                             <a href="{{route('userevent')}}">
                                 <div>
@@ -87,6 +80,16 @@
                                 </div>
                             </a>
                         </div>
+                        @else
+                        <div class="create-event-card text-center">
+                            <div>
+                                <div class="plus-icon">^^</div>
+                                <div class="create-event-text">
+                                    Complete a course or event first before <br>creating a new <span class="highlight">event</span>.
+                                </div>
+                            </div>
+                        </div>
+                        @endif
 
                     </div>
                 </div>

@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Crypque Sin in
+    Crypque Events Login Form
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
@@ -86,7 +86,7 @@
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-2 text-sm mx-auto">
                     Don't have an account?
-                    <a href="{{route('register')}}" class="text-primary text-gradient font-weight-bold">Sign in</a>
+                    <a href="{{route('register')}}" class="text-primary text-gradient font-weight-bold">Sign Up</a>
                   </p>
                 </div>
               </div>

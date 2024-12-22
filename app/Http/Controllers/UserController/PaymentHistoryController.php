@@ -35,9 +35,6 @@ class PaymentHistoryController extends Controller
             'transaction_id' => 'required|string', // Validate transaction_id as required and a string
         ]);
 
-
-
-
         $payment = PaymentHistory::create([
             'user_id' => auth()->id(), // Assuming the user is authenticated
             'event_id' => $request->input('event_id'),
@@ -47,7 +44,7 @@ class PaymentHistoryController extends Controller
             'payment_date' => now(),
         ]);
 
-        return redirect()->route('courespaymentpage')->with('success', 'Payment Send Request successfully!');
+        return redirect()->back()->with('success', 'Payment Send Request successfully!');
     }
 
     /**

@@ -3,6 +3,7 @@
     <!-- Navbar -->
     @include('traning_header.head') 
     <!-- End Navbar -->
+     @dd($EventTraning)
     <div class="container-fluid py-2">
         <div class="card">
             <div class="container">

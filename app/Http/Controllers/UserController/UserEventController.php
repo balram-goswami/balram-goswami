@@ -5,9 +5,11 @@ namespace App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\EventType;
-use App\Models\UserEvent;
-use App\Models\PaymentHistory;
+use App\Models\{
+    EventType,
+    UserEvent,
+    PaymentHistory
+};
 
 class UserEventController extends Controller
 {
@@ -57,9 +59,14 @@ class UserEventController extends Controller
         }
         return redirect()->route('userevent')->with('error', 'Event created successfully.');
     }
-    public function courespaymentpage()
+
+    public function courespaymentpage($id)
     {
-        $Event = UserEvent::where('type', 2)->get();
+        $Event = UserEvent::find($id);
+        if (!$Event) {
+            return redirect()->route('some.error.page')->with('error', 'Event not found');
+        }
+
         $PaymentHistory = PaymentHistory::where('user_id', auth()->id())
             ->where('status', 2)
             ->get();
@@ -68,13 +75,21 @@ class UserEventController extends Controller
     }
 
 
+
     public function my_event()
     {
+        $myEvent = PaymentHistory::where('user_id', Auth::id())->pluck('event_id');
+        $Event = UserEvent::whereIn('id', $myEvent)->get();
+        $PaymentHistory = PaymentHistory::where('user_id', auth()->id())
+            ->where('status', 2)
+            ->get();
+        $createEvent = PaymentHistory::where('user_id', auth()->id())
+            ->where('status', 2)
+            ->where('event_status', 2)
+            ->get();
 
-        $Event = UserEvent::where('user_id', Auth()->id())->where('type', 1)->get();
-        // dd($Event);
-
-        return view('UserPenal.userevents.myevents', compact('Event'));
+        $eventType = EventType::where('id', $Event[0]->event_type)->get();
+        return view('UserPenal.userevents.myevents', compact('Event', 'PaymentHistory', 'createEvent', 'eventType'));
     }
 
     public function edit($id)
@@ -147,6 +162,6 @@ class UserEventController extends Controller
             'payment_date' => now(),
         ]);
 
-        return redirect()->route('courespaymentpage')->with('success', 'Payment Send Request successfully!');
+        return redirect()->back()->with('success', 'Payment Send Request successfully!');
     }
 }

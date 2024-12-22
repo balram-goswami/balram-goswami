@@ -28,4 +28,9 @@ class UserEvent extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function eventType()
+    {
+        return $this->belongsTo(EventType::class, 'event_type');
+    }
 }

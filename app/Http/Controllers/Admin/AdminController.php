@@ -12,20 +12,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{
     Hash,
     Auth,
-    Log
+    Log,
+    Session
 };
 
 class AdminController extends Controller
 {
-    
+
     public function dashboard()
     {
         $getUsers = User::get();
         $getUserEvent = UserEvent::get();
-        
+
         return view('AdminPenal.dashboard', compact('getUsers', 'getUserEvent'));
     }
-    
+
     public function login(Request $request)
     {
         $request->validate([
@@ -36,7 +37,8 @@ class AdminController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin.dashboard')->with('success', 'Logged in successfully');
+            $request->session()->regenerate();
+            return redirect()->route('admin.dashboard')->with('success', 'Logged in successfully'); // Redirect to intended page
         }
 
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
@@ -45,12 +47,9 @@ class AdminController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout(); // Log the user out
-
-        // Invalidate the session and regenerate the CSRF token
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
-        return redirect()->route('login'); // Redirect to the login page or home
+        return redirect()->route('login');
     }
 }

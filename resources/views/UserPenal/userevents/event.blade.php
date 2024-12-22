@@ -10,9 +10,8 @@
                     <h2 class="mb-4"><strong>Create</strong> Event</h2>
                     <!-- Update the form action to point to your route, method to POST, and add enctype for file uploads -->
                     <form action="{{ route('userevent.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf <!-- This is required for Laravel form submission -->
-    
-                        <!-- Image Upload -->
+                        @csrf 
+                        
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="uploadImage" class="form-label">Upload Image</label>

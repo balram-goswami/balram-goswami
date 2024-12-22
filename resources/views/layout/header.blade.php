@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset('assets/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset('assets/img/favicon.png')}}">
   <title>
-    Material Dashboard 3 by Creative Tim
+    Crypque Event User Dashboard
   </title>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!--     Fonts and icons     -->
@@ -22,13 +22,13 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
   <!-- CSS Files -->
   <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<!-- Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <!-- Popper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   <link id="pagestyle" href="{{asset('assets/css/material-dashboard.css?v=3.2.0')}}" rel="stylesheet" />
   <script>
@@ -38,7 +38,7 @@
       let path = window.location.pathname;
       // Extract the last part of the path (the page name)
       let pageName = path.substring(path.lastIndexOf("/") + 1);
-      
+
       // Capitalize the first letter (optional, to make it look nicer)
       pageName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
 
@@ -58,8 +58,7 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
         aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand px-4 py-3 m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard "
-        target="_blank">
+      <a class="navbar-brand px-4 py-3 m-0" href=" {{ route('dashboard')}} ">
         <img src="{{asset('assets/img/logo-ct-dark.png')}}" class="navbar-brand-img" width="26" height="26" alt="main_logo">
         <span class="ms-1 text-sm text-dark">Crypque Event</span>
       </a>
@@ -81,19 +80,14 @@
         </li>
         <li class="nav-item">
           <form method="POST" action="{{ route('logout') }}" id="logout-form" style="display: none;">
-              @csrf
+            @csrf
           </form>
-          
-          <a class="nav-link text-dark" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-              <i class="material-symbols-rounded opacity-5">Logout</i>
-              <span class="nav-link-text ms-1">LogOut</span>
+          <a class="nav-link text-dark" href="{{ route('logout') }}"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="material-symbols-rounded opacity-5">logout</i>
+            <span class="nav-link-text ms-1">Log Out</span>
           </a>
-      </li>
-      
-       
-       
+        </li>
       </ul>
     </div>
-    
   </aside>
-  

@@ -13,7 +13,7 @@
                     <img src="{{ asset('storage/event_images/' . $data->image_path)}}"
                             class="card-img-top"
                             alt="Event Image"
-                            style="padding: 12px; border-radius: 18px;">
+                            style="padding: 12px; border-radius: 18px;" >
                         <div class="card-body text-center">
                             <h5 class="card-title">
                                 {{ $data->event_name }} <br>

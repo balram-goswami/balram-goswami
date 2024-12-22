@@ -34,8 +34,7 @@ Route::middleware(['auth'])->group(
 
         Route::get('/event/edit/{id}', [UserEventController::class, 'edit'])->name('event.edit');
         Route::delete('/event/delete/{id}', [UserEventController::class, 'destroy'])->name('event.delete');
-        Route::delete('update/{id}', [UserEventController::class, 'update'])->name('update');
-
+        Route::post('update/{id}', [UserEventController::class, 'update'])->name('update');
 
         Route::resource('PaymentHistory', PaymentHistoryController::class);
     }
@@ -44,19 +43,25 @@ Route::middleware(['auth'])->group(
 
 
 Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function () {
-    Route::get('login', [AdminController::class, 'index']);
+    Route::get('login', [AdminController::class, 'dashboard']);
     Route::post('login', [AdminController::class, 'login'])->name('admin.login');
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
     // Add other admin routes that require authentication
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/eventcreate', [EventController::class, 'create'])->name('admin.eventcreate');
+       
         Route::get('/showcreateevent', [EventController::class, 'showcreateevent'])->name('admin.showcreateevent');
         Route::get('/upload_event_video', [EventController::class, 'upload_event_video'])->name('admin.upload_event_video');
         Route::post('/create_event', [EventController::class, 'create_event'])->name('create_event');
         Route::get('/allstudents', [AllStudentController::class, 'index'])->name('allstudents');
         Route::post('/uploadVideo', [EventController::class, 'uploadVideo'])->name('uploadVideo');
 
+        // Controller function for Event Type Actions
+        Route::get('/viewEventType', [EventController::class, 'viewEventType'])->name('admin.viewEventType');
+        Route::get('/createEventType', [EventController::class, 'createEventType'])->name('admin.createEventType');
+        Route::post('/saveEventType', [EventController::class, 'saveEventType'])->name('saveEventType');
+        Route::delete('/destroyEventType/delete/{id}', [EventController::class, 'destroyEventType'])->name('admin.destroyEventType.delete');
 
         Route::post('/payment-history/accept/{id}', [PaymentHisController::class, 'accept'])->name('payment-history.accept');
         Route::post('/payment-history/reject/{id}', [PaymentHisController::class, 'reject'])->name('payment-history.reject');
@@ -64,3 +69,4 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function 
         Route::resource('payment_his', PaymentHisController::class);
     });
 });
+

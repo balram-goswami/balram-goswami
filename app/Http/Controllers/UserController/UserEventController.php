@@ -89,7 +89,7 @@ class UserEventController extends Controller
     {
         $event = UserEvent::findOrFail($id);
         $event->delete();
-        return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
+        return redirect()->route('my_event')->with('success', 'Event deleted successfully.');
     }
 
     public function update(Request $request, $id)

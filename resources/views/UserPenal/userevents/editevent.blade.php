@@ -11,8 +11,6 @@
                     <!-- Update the form action to point to your route, method to POST, and add enctype for file uploads -->
                     <form action="{{ route('update', $event->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT') <!-- Use PUT or PATCH for updating resources -->
-                    
                         <!-- Image Upload -->
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -79,7 +77,7 @@
                                         <option selected disabled>Select Event Type</option>
                                         @foreach ($EventType as $type)
                                             <option value="{{ $type->id }}" {{ $type->id == $event->event_type ? 'selected' : '' }}>
-                                                {{ $type->description }}
+                                                {{ $type->name }}
                                             </option>
                                         @endforeach
                                     </select>

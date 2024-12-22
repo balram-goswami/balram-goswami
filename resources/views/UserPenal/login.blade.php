@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Crypque Sin in 
+    Crypque Sin in
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
@@ -24,15 +23,15 @@
 </head>
 
 <body class="">
-  
+
   <main class="main-content  mt-0">
     <section>
       <div class="page-header min-vh-100">
         <div class="container">
           <div class="row">
             <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column">
-              <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center" 
-              style="background-image: url('../assets/img/illustrations/illustration-signup.jpg'); background-size: cover;">
+              <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center"
+                style="background-image: url('../assets/img/illustrations/illustration-signup.jpg'); background-size: cover;">
               </div>
             </div>
             <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
@@ -44,45 +43,45 @@
                        justify-content: center;">Login into your account</p>
                 </div>
                 <div class="card-body">
-                
-              <!-- Display Errors -->
-              @if ($errors->any())
-              <div class="alert alert-danger" id="error-alert">
-                  @foreach ($errors->all() as $error)
-                      <p>{{ $error }}</p>
-                  @endforeach
-              </div>
-          @endif
 
-<form method="POST" action="{{ route('login') }}">
-@csrf
+                  <!-- Display Errors -->
+                  @if ($errors->any())
+                  <div class="alert alert-danger" id="error-alert">
+                    @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                    @endforeach
+                  </div>
+                  @endif
 
-<!-- Email Input -->
-<div class="input-group input-group-outline mb-3">
-    <label class="form-label">Enter Email</label>
-    <input type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-    @if ($errors->has('email'))
-        <div class="alert alert-danger mt-1">{{ $errors->first('email') }}</div>
-    @endif
-</div>
+                  <form method="POST" action="{{ route('login') }}">
+                    @csrf
 
-<!-- Password Input -->
-<div class="input-group input-group-outline mb-3">
-    <label class="form-label">Password</label>
-    <input type="password" class="form-control" name="password" required>
-    @if ($errors->has('password'))
-        <div class="alert alert-danger mt-1">{{ $errors->first('password') }}</div>
-    @endif
-</div>
+                    <!-- Email Input -->
+                    <div class="input-group input-group-outline mb-3">
+                      <label class="form-label">Enter Email</label>
+                      <input type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                      @if ($errors->has('email'))
+                      <div class="alert alert-danger mt-1">{{ $errors->first('email') }}</div>
+                      @endif
+                    </div>
 
-<!-- Submit Button -->
-<div class="text-center">
-    <button type="submit" class="btn btn-lg bg-gradient-dark btn-lg w-100 mt-4 mb-0">Log In</button>
-</div>
-</form>
+                    <!-- Password Input -->
+                    <div class="input-group input-group-outline mb-3">
+                      <label class="form-label">Password</label>
+                      <input type="password" class="form-control" name="password" required>
+                      @if ($errors->has('password'))
+                      <div class="alert alert-danger mt-1">{{ $errors->first('password') }}</div>
+                      @endif
+                    </div>
 
-                
-              
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-lg bg-gradient-dark btn-lg w-100 mt-4 mb-0">Log In</button>
+                    </div>
+                  </form>
+
+
+
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-2 text-sm mx-auto">
@@ -92,8 +91,8 @@
                 </div>
               </div>
             </div>
-            
-            
+
+
           </div>
         </div>
       </div>
@@ -123,9 +122,9 @@
 <script>
   // Set a timeout to remove the alert after 120 seconds (120000 milliseconds)
   setTimeout(function() {
-      var errorAlert = document.getElementById('error-alert');
-      if (errorAlert) {
-          errorAlert.style.display = 'none';
-      }
+    var errorAlert = document.getElementById('error-alert');
+    if (errorAlert) {
+      errorAlert.style.display = 'none';
+    }
   }, 5000); // 120 seconds
 </script>

@@ -75,7 +75,7 @@
                                     <select class="form-select" name="event_type" id="eventType" required>
                                         <option selected disabled>Select Event Type</option>
                                         @foreach ($EventType as $type)
-                                            <option value="{{ $type->id }}">{{ $type->description }}</option>
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

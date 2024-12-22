@@ -3,19 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
+use App\Models\{
+    Admin,
+    User,
+    UserEvent
+};
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\{
+    Hash,
+    Auth,
+    Log
+};
 
 class AdminController extends Controller
 {
-    public function index()
+    
+    public function dashboard()
     {
-        return view('AdminPenal.adminlogin');
+        $getUsers = User::get();
+        $getUserEvent = UserEvent::get();
+        
+        return view('AdminPenal.dashboard', compact('getUsers', 'getUserEvent'));
     }
-
+    
     public function login(Request $request)
     {
         $request->validate([
@@ -32,10 +42,6 @@ class AdminController extends Controller
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
     }
 
-    public function dashboard()
-    {
-        return view('AdminPenal.dashboard');
-    }
 
     public function logout(Request $request)
     {

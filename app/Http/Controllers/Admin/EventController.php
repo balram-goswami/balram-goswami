@@ -4,21 +4,75 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\EventType;
-use App\Models\UserEvent;
-use App\Models\EventTraning;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use App\Models\{
+    EventType,
+    UserEvent,
+    EventTraning
+};
+use Illuminate\Support\Facades\{
+    Auth,
+    Validator,
+    Storage,
+    Session,
+    Redirect
+};
 
 class EventController extends Controller
 {
 
     public function create()
     {
-
         $Event = UserEvent::where('type', 2)->get();
-        return view('AdminPenal.create_event', compact('Event')); // Create a view for the event creation form
+        return view('AdminPenal.create_event', compact('Event'));
     }
+
+    public function viewEventType()
+    {
+        $EventType = EventType::all();
+        return view('AdminPenal.ViewEventType', compact('EventType'));
+    }
+
+    public function createEventType()
+    {
+        $EventType = EventType::all();
+        return view('AdminPenal.CreateEventType', compact('EventType'));
+    }
+
+    public function saveEventType(Request $request)
+    {
+        // Validation
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'nullable|string|max:255', // You can add a max length for better control
+                'description' => 'nullable|string|max:500', // Added max length for description
+            ]
+        );
+
+        // If validation fails, return a JSON response with errors
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors()->first()  // Use ->errors() instead of getMessageBag()
+            ], 422);
+        }
+
+        // Create a new EventType instance and save the data
+        $form = new EventType;
+        $form->name = $request->name;
+        $form->description = $request->description;
+        $form->save();
+
+        return redirect()->route('admin.viewEventType')->with('success', 'Event created successfully.');
+    }
+
+
+    public function destroyEventType($id)
+    {
+        $eventType = EventType::findOrFail($id);
+        $eventType->delete();
+        return redirect()->route('admin.viewEventType')->with('success', 'Event Type deleted successfully.');
+    }
+
 
     public function showcreateevent()
     {
@@ -29,8 +83,6 @@ class EventController extends Controller
     public function upload_event_video()
     {
         $EventType = UserEvent::where('type', 2)->get();
-
-        // dd($EventType);
 
         return view('AdminPenal.upload_event_video', compact('EventType'));
     }

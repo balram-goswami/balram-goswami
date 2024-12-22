@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Material Dashboard 3 - v3.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-   Crypque Event Admin 
+    Crypque Event Admin
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
@@ -37,7 +23,7 @@
 </head>
 
 <body class="bg-gray-200">
- 
+
   <main class="main-content  mt-0">
     <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
       <span class="mask bg-gradient-dark opacity-6"></span>
@@ -48,37 +34,37 @@
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
                   <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Crypque Event Admin</h4>
-                  
+
                 </div>
               </div>
               <div class="card-body">
                 <form method="POST" action="{{ route('admin.login') }}" class="text-start">
-                    @csrf
-                    <div class="input-group input-group-outline my-3">
+                  @csrf
+                  <div class="input-group input-group-outline my-3">
                     <label class="form-label">Email</label>
                     <input type="email" name="email" value="{{ old('email') }}" class="form-control">
                   </div>
                   @error('email')
                   <div class="alert alert-danger">{{ $message }}</div>
-               @enderror
+                  @enderror
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">Password</label>
                     <input type="password" name="password" class="form-control">
                   </div>
                   @error('password')
                   <div class="alert alert-danger">{{ $message }}</div>
-               @enderror
+                  @enderror
                   <div class="text-center">
                     <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign in</button>
                   </div>
-                  
+
                 </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
+
     </div>
   </main>
   <!--   Core JS Files   -->
@@ -86,7 +72,7 @@
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  
+
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->

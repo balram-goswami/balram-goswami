@@ -11,7 +11,6 @@ class DashboardController extends Controller
     public function index()
     {
         $UserEvent = UserEvent::where('type', 1)->get();
-        // dd($UserEvent);
         return view('UserPenal.dashboard', compact('UserEvent'));
     }
 }

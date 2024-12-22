@@ -59,21 +59,33 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active bg-gradient-dark text-white" href="{{ route('dashboard') }}">
+          <a class="nav-link active bg-gradient-dark text-white" href="{{ route('admin.dashboard') }}">
             <i class="material-symbols-rounded opacity-5">Home</i>
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="{{route('allstudents')}}">
-            <i class="material-symbols-rounded opacity-5">groupperson</i>
-            <span class="nav-link-text ms-1">All Student </span>
+            <i class="material-symbols-rounded opacity-5">person</i>
+            <span class="nav-link-text ms-1">All Users </span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="{{route('admin.eventcreate')}}">
             <i class="material-symbols-rounded opacity-5">Event</i>
             <span class="nav-link-text ms-1">Event Creater</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{{route('admin.viewEventType')}}">
+            <i class="material-symbols-rounded opacity-5">Event</i>
+            <span class="nav-link-text ms-1">Event Types</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{{route('allstudents')}}">
+            <i class="material-symbols-rounded opacity-5">person</i>
+            <span class="nav-link-text ms-1">Event Publish Request</span>
           </a>
         </li>
         <li class="nav-item">

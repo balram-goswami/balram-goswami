@@ -9,7 +9,7 @@
             <div class="row">
                 @foreach($Event as $event)
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
+                    <div class="card h-100" >
                         <img src="{{ asset('storage/event_images/' . $event->image_path) }}" 
                              class="card-img-top" 
                              alt="Event Image"

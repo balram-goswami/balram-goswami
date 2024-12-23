@@ -61,8 +61,7 @@
             <div class="card-body">
                 <div class="container mt-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4 class="fw-bold py-3 mb-0 pull-left">Events Types</h4>
-                        <a href="{{route('admin.createEventType')}}"><button type="button" class="btn btn-primary">Add Event Type</button></a>
+                        <h4 class="fw-bold py-3 mb-0 pull-left">List Of Event By Users</h4>
                     </div>
 
                     <!-- Success Message -->
@@ -84,7 +83,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
+                                <th>User Name</th>
                                 <th>Event Name</th>
                                 <th>Status</th>
                                 <th>Action</th>

@@ -52,18 +52,17 @@ class RegisterController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
-
+ 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
-
         // Attempt to log the user in
         if (Auth::attempt($credentials)) {
             return redirect()->intended('/dashboard'); // Redirect to the intended page
         }
 
         // If login fails, redirect back with error
-        return redirect()->route('login')->withErrors('Invalid login credentials.');
+        return redirect()->back()->withErrors('Invalid login credentials.');
     }
     public function logout(Request $request)
     {

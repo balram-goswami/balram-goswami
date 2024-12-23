@@ -18,9 +18,17 @@ use Illuminate\Support\Facades\{
 
 class AdminController extends Controller
 {
+    public function index()
+    {
+        return view('AdminPenal.adminlogin');
+    }
 
     public function dashboard()
     {
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+
         $getUsers = User::get();
         $getUserEvent = UserEvent::get();
 
@@ -50,6 +58,6 @@ class AdminController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login');
+        return redirect()->route('admin.login');
     }
 }

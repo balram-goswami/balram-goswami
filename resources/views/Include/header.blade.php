@@ -101,11 +101,11 @@
           </a>
         </li>
         <li class="nav-item">
-          <form method="POST" action="{{ route('logout') }}" id="logout-form" style="display: none;">
+          <form method="POST" action="{{ route('admin.logout') }}" id="logout-form" style="display: none;">
             @csrf
           </form>
 
-          <a class="nav-link text-dark" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+          <a class="nav-link text-dark" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="material-symbols-rounded opacity-5">Logout</i>
             <span class="nav-link-text ms-1">LogOut</span>
           </a>

@@ -8,6 +8,7 @@
         <div class="container">
             <div class="row">
                 @foreach($Event as $data)
+                @if(isset($data))
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
                         <img src="{{ asset('storage/event_images/' . $data->image_path) }}"
@@ -20,9 +21,6 @@
                                 Guest :-{{ $data->guest_names }}<br>
                                 PROGRAM :- {{ $data->event_date }}<br>
                                 Speaker :- {{ $data->speaker_name }}<br>
-                                @foreach($eventType as $type)
-                                Event Type :- {{ $type->name }}
-                                @endforeach
                             </h5>
                             <p class="card-text">{{ $data->description }}</p>
                         </div>
@@ -38,10 +36,15 @@
                                 <button class="btn btn-primary" data-event-id="{{ $data->id }}">Start Learning</button>
                             </a>
                         </div>
+                        @else
+                        <div class="card-footer text-center">
+                            <h3 class="btn btn-primary">We are processing your payment<br> Status Update Shortly</h3>
+                        </div>
                         @endif
 
                     </div>
                 </div>
+                @endif
                 @endforeach
 
                 <style>
@@ -69,7 +72,7 @@
                 </style>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-                        @if(!$createEvent)
+                        @if($createEvent)
                         <div class="create-event-card text-center">
                             <a href="{{route('userevent')}}">
                                 <div>
@@ -90,7 +93,6 @@
                             </div>
                         </div>
                         @endif
-
                     </div>
                 </div>
             </div>

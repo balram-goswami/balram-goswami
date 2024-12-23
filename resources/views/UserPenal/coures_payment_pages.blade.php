@@ -7,42 +7,39 @@
     <div class="container-fluid py-2">
         <div class="container">
             <div class="row">
-                @foreach($Event as $data)
+                @foreach($Event as $event)
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-                    <img src="{{ asset('storage/event_images/' . $data->image_path)}}"
+                        <img src="{{ asset('storage/event_images/' . $event->image_path) }}"
                             class="card-img-top"
                             alt="Event Image"
-                            style="padding: 12px; border-radius: 18px;" >
+                            style="padding: 12px; border-radius: 18px;">
                         <div class="card-body text-center">
                             <h5 class="card-title">
-                                {{ $data->event_name }} <br>
-                                Guest :-{{ $data->guest_names }}<br>
-                                PROGRAM :- {{ $data->event_date }}<br>
-                                Speaker :- {{ $data->speaker_name }}<br>
-                                @foreach($eventType as $type)
-                                Event Type :- {{ $type->name }}
-                                @endforeach
+                                {{ $event->event_name }} <span class="text-highlight">{{ $event->guest_names }}</span>
+                                PROGRAM {{ $event->event_date }}<br>
+                                Speaker {{ $event->speaker_name }}<br>
+                                Event Type {{ $event->event_type }}
                             </h5>
-                            <p class="card-text">{{ $data->description }}</p>
+                            <p class="card-text">{{ $event->description }}</p>
                         </div>
 
                         {{-- Check if the event has a corresponding PaymentHistory with status == 2 --}}
                         @php
-                        $paymentHistoryForEvent = $PaymentHistory->where('event_id', $data->id)->first();
+                        $paymentHistoryForEvent = $PaymentHistory->where('event_id', $event->id)->first();
                         @endphp
 
                         @if($paymentHistoryForEvent && $paymentHistoryForEvent->status == 2)
                         <div class="card-footer text-center">
-                            <a href="{{ route('eventtraning', $data->id) }}">
-                                <button class="btn btn-primary" data-event-id="{{ $data->id }}">Start Learning</button>
+                            <a href="{{ route('eventtraning', ['id' => $event->id]) }}">
+                                <button class="btn btn-primary" data-event-id="{{ $event->id }}">Start Learning</button>
                             </a>
 
                         </div>
                         @else
                         <div class="card-footer text-center">
-                            <button class="btn btn-primary pay-now-btn" data-event-id="{{ $data->id }}">Pay Now</button>
-                            <button class="btn btn-secondary pay-crypto-btn" data-event-id="{{ $data->id }}">Pay With Crypto</button>
+                            <button class="btn btn-primary pay-now-btn" data-event-id="{{ $event->id }}">Pay Now</button>
+                            <button class="btn btn-secondary pay-crypto-btn" data-event-id="{{ $event->id }}">Pay With Crypto</button>
                         </div>
                         @endif
                     </div>
@@ -64,7 +61,7 @@
                                 <form action="{{ route('PaymentHistory.store') }}" method="POST">
                                     @csrf
                                     <input type="hidden" id="eventId" name="event_id">
-                                    <input type="hidden" id="payment_method" name="payment_method">
+                                    <input type="hidden" id="payment_method" name="payment_method"> <!-- Hidden field for payment method -->
                                     <div class="form-group">
                                         <label for="amount">Amount</label>
                                         <div class="input-group input-group-outline">

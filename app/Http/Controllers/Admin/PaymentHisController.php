@@ -13,9 +13,11 @@ class PaymentHisController extends Controller
      */
     public function index()
     {
-        $PaymentHistory = PaymentHistory::with('user', 'UserEvent')->where('status', 1)->paginate(10);
-        // dd($PaymentHistory);
-        return view('AdminPenal.payment_his', compact('PaymentHistory'));
+        
+        $PaymentPending = PaymentHistory::with('user', 'UserEvent')->where('status', 1)->paginate(10);
+        $PaymentComplete = PaymentHistory::with('user', 'UserEvent')->where('status', 2)->paginate(10);
+       
+        return view('AdminPenal.payment_his', compact('PaymentPending', 'PaymentComplete'));
     }
 
     public function accept($id)

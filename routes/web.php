@@ -19,7 +19,7 @@ Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->na
 Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/login', [RegisterController::class, 'showLoginForm'])->name('login');
 Route::post('login', [RegisterController::class, 'login']);
-Route::post('/logout', [RegisterController::class, 'logout'])->name('logout');
+Route::post('/logout', [RegisterController::class, 'logout'])->name('user.logout');
 
 Route::middleware(['auth'])->group(
     function () {
@@ -36,13 +36,14 @@ Route::middleware(['auth'])->group(
         Route::post('update/{id}', [UserEventController::class, 'update'])->name('update');
 
         Route::resource('PaymentHistory', PaymentHistoryController::class);
+        
     }
 );
 
 Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function () {
-    Route::get('login', [AdminController::class, 'dashboard']);
+    Route::get('/login', [AdminController::class, 'index']);
     Route::post('login', [AdminController::class, 'login'])->name('admin.login');
-    Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
+    Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
     // Add other admin routes that require authentication
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -62,7 +63,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function 
 
         // Event Publish Request
         Route::get('publishRequestView', [EventController::class, 'publishRequestView'])->name('admin.publishRequestView');
-        Route::get('publishedEventReview/{id}', [EventController::class, 'publishedEventReview'])->name('admin.publishedEventReview');
+        Route::get('/publishedEventReview/{eventId}', [EventController::class, 'publishedEventReview'])->name('admin.publishedEventReview');
         Route::post('/publishEventStatusUpdate/{id}', [EventController::class, 'publishEventStatusUpdate'])->name('publishEventStatusUpdate');
         Route::delete('/publishEventDelete/{id}', [EventController::class, 'publishEventDelete'])->name('admin.publishEventDelete');
 

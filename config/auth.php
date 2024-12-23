@@ -74,7 +74,7 @@ return [
 
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class, // Ensure this model exists
+            'model' => App\Models\Admin::class, 
         ],
     ],
 

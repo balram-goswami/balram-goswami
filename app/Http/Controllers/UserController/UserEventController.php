@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\UserController;
 
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{Auth, DB};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\{
@@ -15,9 +15,15 @@ class UserEventController extends Controller
 {
     public function index()
     {
+        $eventIds = DB::table('payment_history')
+            ->whereIn('event_id', function ($query) {
+                $query->select('id')
+                    ->from('event_types');
+            })
+            ->pluck('user_id');
 
-        $EventType = EventType::get();
-        // dd($EventType);
+        $EventType = EventType::where('id', $eventIds)->get();
+
         return view('UserPenal.userevents.event', compact('EventType'));
     }
 
@@ -62,11 +68,8 @@ class UserEventController extends Controller
 
     public function courespaymentpage($id)
     {
-        $Event = UserEvent::find($id);
-        if (!$Event) {
-            return redirect()->route('some.error.page')->with('error', 'Event not found');
-        }
-
+        // $Event = UserEvent::where('type', 2)->get();
+        $Event = UserEvent::where('id', $id)->get();
         $PaymentHistory = PaymentHistory::where('user_id', auth()->id())
             ->where('status', 2)
             ->get();
@@ -84,18 +87,15 @@ class UserEventController extends Controller
             ->where('status', 2)
             ->get();
         $createEvent = PaymentHistory::where('user_id', auth()->id())
-            ->where('status', 2)
             ->where('event_status', 2)
-            ->get();
+            ->exists();
 
-        $eventType = EventType::where('id', $Event[0]->event_type)->get();
-        return view('UserPenal.userevents.myevents', compact('Event', 'PaymentHistory', 'createEvent', 'eventType'));
+        return view('UserPenal.userevents.myevents', compact('Event', 'PaymentHistory', 'createEvent'));
     }
 
     public function edit($id)
     {
         $event = UserEvent::findOrFail($id);
-        // dd($event);
         $EventType = EventType::get();
         return view('UserPenal.userevents.editevent', compact('event', 'EventType')); // Return an edit view
     }
@@ -149,9 +149,6 @@ class UserEventController extends Controller
             'amount' => 'required|numeric|min:1', // Validate amount
             'transaction_id' => 'required|string', // Validate transaction_id as required and a string
         ]);
-
-
-
 
         $payment = PaymentHistory::create([
             'user_id' => auth()->id(), // Assuming the user is authenticated

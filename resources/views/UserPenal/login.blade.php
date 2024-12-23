@@ -55,7 +55,6 @@
 
                   <form method="POST" action="{{ route('login') }}">
                     @csrf
-
                     <!-- Email Input -->
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Enter Email</label>
@@ -126,5 +125,5 @@
     if (errorAlert) {
       errorAlert.style.display = 'none';
     }
-  }, 5000); // 120 seconds
+  }, 120); // 120 seconds
 </script>

@@ -179,10 +179,11 @@ class EventController extends Controller
         return redirect()->back()->with('success', 'Event Type deleted successfully.');
     }
 
-    public function publishedEventReview($id)
+    public function publishedEventReview($eventId)
     {
-        $list = UserEvent::find($id);
-        return view('AdminPenal.PublishedEventReview', compact('list'));
+        $eventDetail = UserEvent::find($eventId);
+        
+        return view('AdminPenal.PublishedEventReview', compact('eventDetail'));
     }
 
     public function publishEventStatusUpdate(Request $request, $id)

@@ -15,8 +15,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $userEvents = UserEvent::with(['user', 'eventType'])->get();
+        $adminEvents = UserEvent::with(['user', 'eventType'])
+        ->where('type', 2)
+        ->get();
+        $userEvents = UserEvent::with(['user', 'eventType'])
+        ->where('type', 1)
+        ->get();
 
-        return view('UserPenal.dashboard', compact('userEvents'));
+        return view('UserPenal.dashboard', compact('adminEvents', 'userEvents'));
     }
 }
